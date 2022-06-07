@@ -1,0 +1,139 @@
+/*
+ ================================================
+     BATTLESHIP GAME STYLINGS
+ ================================================
+*/
+.game-holder {
+	width: 90%;
+	min-width: 400px;
+	margin: 4em auto 1em auto;
+	/* border-bottom: 3px solid rgb(200,0,0); */
+}
+.game-holder>h1 {
+	margin-bottom: 0;
+}
+.game-holder>p {
+	margin-top: 0;
+}
+.game-flex {
+  display: flex;
+  width: 100%;
+  /* justify-content: space-between; */
+  margin: 0 auto;
+}
+.game-board {
+	width: 100%;
+	margin-bottom: 2em;
+    table-layout: fixed;
+    border-collapse: collapse;
+	/* border: 1px solid blue; */
+}
+#the-board {
+	width: 75%;
+	padding: 0;
+	/* border: 1px solid black; */
+}
+#score-status {
+	width: 25%;
+	text-align: left;
+	font-size: 1.1em;
+	font-weight: bold;
+	padding: 2em;
+}
+#score-status>p {
+	margin-left: 0.3em;
+}
+.game-board td {
+	width: 9%;
+	padding: 0 0 9% 0;
+	/* background-color: rgb(117,255,255); */
+	border: 2px solid rgb(0,0,0);
+}
+.game-board td:hover {
+	cursor: crosshair;
+}
+.game-board th {
+	width: 9%;
+	padding: 0 0 0.3em 0;
+	text-align: center;
+	border: none;
+	background-color: transparent;
+	font-weight: 550;
+}
+.game-board td:nth-child(1), th:nth-child(1) {
+	padding: 0 0.5em 0 0;
+	text-align: right;
+	border: none;
+	background-color: transparent;
+	font-weight: 550;
+}
+.clear {
+	background-color: rgb(117,255,255);
+
+}
+.hit {
+	background-color: rgb(117,255,255);
+	background-image: url("./explosion.png");
+	background-repeat: no-repeat;
+	background-size: 75%;
+	background-position: center center;
+}
+.missed {
+	background-color: rgb(117,255,255);
+	background-image: url("./no-entry.png");
+	background-repeat: no-repeat;
+	background-size: 50%;
+	background-position: center center;
+}
+.show {
+	background-color: rgb(117,255,255);
+	background-image: url("./battleship.png");
+	background-repeat: no-repeat;
+	background-size: 60%;
+    background-position: center center;	
+}
+.hide {
+	background-color: rgb(117,255,255);
+}
+#new-game-button {
+	width: 8em;
+	height: 3em;
+	border-radius: 10px;
+	background-color: rgb(224,24,11);
+	color: rgb(255,255,255);
+	font-size: 0.8em;
+	font-weight: bolder;
+	margin: 0;
+}
+#new-game-button:hover {
+	cursor: pointer;
+}
+#show-hide-button {
+	width: 8em;
+	height: 3em;
+	border-radius: 10px;
+	color: rgb(255,255,255);
+	font-size: 0.8em;
+	font-weight: bolder;
+	margin: 0;
+}
+#show-hide-button:hover {
+	cursor: pointer;
+}
+.click-to-show {
+	background-color: rgb(24,184,11);
+}
+.click-to-show::after {
+	content: "REVEAL";
+}
+.click-to-hide {
+	background-color: rgb(11,24,224);
+}
+.click-to-hide::after {
+	content: "HIDE";
+}
+
+/*
+ ================================================
+*/
+
