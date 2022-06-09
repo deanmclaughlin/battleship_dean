@@ -11,7 +11,7 @@ class BattleShip extends React.Component {
 		*/
 		const nrows = 10;
 		const ncols = 10;
-		this.maxshots = Math.round(Number(this.props.maxshots));
+		this.maxshots = Math.max(1, Math.round(Number(this.props.maxshots)));
 		
 		this.rowLabels = this.numArray(nrows);
         this.columnLabels = this.charArray( Math.max(1, Math.min(Number(ncols), 26)) );
