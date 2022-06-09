@@ -5,10 +5,15 @@ import React from 'react';
 class BattleShip extends React.Component {
     constructor(props) {
         super(props);
-		const nrows = 10;     /* in future: const nrows = Math.round(Number(this.props.rows)); */
-		const ncols = 10;     /* in future: const ncols = Math.round(Number(this.props.columns)); */
+		/*   [ for future use... ]
+		const nrows = Math.max(1, Math.min(Math.round(Number(this.props.rows)), 26));
+		const ncols = Math.max(1, Math.min(Math.round(Number(this.props.columns)), 26));
+		*/
+		const nrows = 10;
+		const ncols = 10;
+		this.maxshots = Math.round(Number(this.props.maxshots));
 		
-		this.rowLabels = this.numArray( Math.max(1, Math.min(Number(nrows), 26)) );
+		this.rowLabels = this.numArray(nrows);
         this.columnLabels = this.charArray( Math.max(1, Math.min(Number(ncols), 26)) );
 		this.cellNames = this.coordsArray(this.rowLabels, this.columnLabels);
 		this.occupiedCells = this.placeShips(this.cellNames, ncols, nrows)
@@ -23,7 +28,7 @@ class BattleShip extends React.Component {
 		
         this.state = {
 			showTargets: false,
-			shotsAllowed: Math.round(Number(this.props.maxshots)),
+			shotsAllowed: this.maxshots,
 			totalTargets: this.occupiedCells.length,
 			totalFired: 0,
 			totalHits: 0,
@@ -152,7 +157,7 @@ class BattleShip extends React.Component {
         this.setState((state) => {
 			return {
 			    showTargets: false,
-			    shotsAllowed: Math.round(Number(this.props.maxshots)),
+			    shotsAllowed: this.maxshots,
 			    totalTargets: this.occupiedCells.length,
 	            totalFired: 0,
 	            totalHits: 0,
@@ -188,7 +193,7 @@ class BattleShip extends React.Component {
 			this.clear();
 		} else if (this.state.totalFired === this.state.shotsAllowed) {
 			let message = "YOU LOSE! " + (this.state.totalTargets - this.state.totalHits)
-			            + " targets have survived your attack.";
+			                + " targets have survived your attack.";
 			alert(message + "\n\nClick OK to start a new game.");
 			this.clear();
 		}
@@ -206,7 +211,7 @@ class BattleShip extends React.Component {
 			            <thead>
 			            <tr>
 				            <th></th>
-					        {this.columnLabels.map(col => <th key={"th"+col} id={"th"+col}>{col}</th>)}
+					        {this.columnLabels.map(col => <th key={"col"+col} id={"col"+col}>{col}</th>)}
 			            </tr>
 			            </thead>
 						
