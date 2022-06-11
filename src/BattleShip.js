@@ -18,7 +18,7 @@ class BattleShip extends React.Component {
         this.columnLabels = this.charArray(this.ncols);
 		this.cellNames = this.coordsArray(this.rowLabels, this.columnLabels);
 		
-		this.occupiedCells = this.populate(this.ntargs, this.cellNames, this.ncols, this.nrows);
+		this.occupiedCells = this.populate(this.ntargs, this.cellNames, this.columnLabels, this.rowLabels);
 		
 		this.initCells = {};
 		for (let i=0; i<this.cellNames.length; i++) {
@@ -72,7 +72,7 @@ class BattleShip extends React.Component {
 		return outputArray;
 	}
 	
-	populate(numTarget, gridCells, numCol, numRow) {
+	populate(numTarget, gridCells, columnNames, rowNames) {
 	    let available = [...gridCells];
 		let outputArray = [];
 		
@@ -178,7 +178,7 @@ class BattleShip extends React.Component {
 	}
 	
 	clear() {
-		this.occupiedCells = this.populate(this.ntargs, this.cellNames, this.ncols, this.nrows);
+		this.occupiedCells = this.populate(this.ntargs, this.cellNames, this.columnLabels, this.rowLabels);
 		
 		this.initCells = {};
 		for (let i=0; i<this.cellNames.length; i++) {
