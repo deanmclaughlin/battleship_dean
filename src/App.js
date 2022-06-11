@@ -10,7 +10,7 @@ function App() {
 		<p> Click a square to fire on a ship</p>
       </header>
 	  
-	  <BattleShip rows="10" columns="10" maxshots="35" />
+	  <BattleShip rows="10" columns="10" />
 	  
     </div>
   );

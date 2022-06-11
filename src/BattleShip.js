@@ -6,18 +6,20 @@ class BattleShip extends React.Component {
     constructor(props) {
         super(props);
 		/*   [ for future use... ]
-		const nrows = Math.max(1, Math.min(Math.round(Number(this.props.rows)), 26));
-		const ncols = Math.max(1, Math.min(Math.round(Number(this.props.columns)), 26));
+		this.nrows = Math.max(8, Math.min(Math.round(Number(this.props.rows)), 26));
+		this.ncols = Math.max(8, Math.min(Math.round(Number(this.props.columns)), 26));
 		*/
-		const nrows = 10;
-		const ncols = 10;
-		this.maxshots = Math.max(1, Math.round(Number(this.props.maxshots)));
+		this.nrows = 10;
+		this.ncols = 10;
+		this.ntargs = 5 * Math.round((this.nrows * this.ncols)/25);
+		this.maxshots = 2 * this.ntargs;
 		
-		this.rowLabels = this.numArray(nrows);
-        this.columnLabels = this.charArray( Math.max(1, Math.min(Number(ncols), 26)) );
+		this.rowLabels = this.numArray(this.nrows);
+        this.columnLabels = this.charArray(this.ncols);
 		this.cellNames = this.coordsArray(this.rowLabels, this.columnLabels);
-		this.occupiedCells = this.placeShips(this.cellNames, ncols, nrows);
-						 
+		
+		this.occupiedCells = this.populate(this.ntargs, this.cellNames, this.ncols, this.nrows);
+		
 		this.initCells = {};
 		for (let i=0; i<this.cellNames.length; i++) {
 		    const occupado = this.occupiedCells.includes(this.cellNames[i]);
@@ -29,7 +31,7 @@ class BattleShip extends React.Component {
         this.state = {
 			showTargets: false,
 			shotsAllowed: this.maxshots,
-			totalTargets: this.occupiedCells.length,
+			totalTargets: this.ntargs,
 			totalFired: 0,
 			totalHits: 0,
 			totalMisses: 0,
@@ -50,7 +52,7 @@ class BattleShip extends React.Component {
 	}
 	
 	charArray(numElements) {
-		const characters="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		let outputArray = [];
 		for (let i=1; i<=numElements; i++) {
 			outputArray.push(characters.substring(i-1,i));
@@ -70,14 +72,38 @@ class BattleShip extends React.Component {
 		return outputArray;
 	}
 	
-	placeShips(gridCells, numCol, numRow) {
+	populate(numTarget, gridCells, numCol, numRow) {
+	    let available = [...gridCells];
 		let outputArray = [];
-	    outputArray = ["A1", "A2", "A3", "A4", "A5",
+		
+		/*
+		const allSizes = [ [6,4,3,3,2,2], [5,4,4,3,2,2],
+		                   [5,4,3,3,3,2], [4,4,4,3,3,2] ];
+		const allOrientations = ["horizontal", "vertical", "diagonal"];
+		const sizes = allSizes[ Math.floor(Math.random() * allSizes.length) ];
+		let orientations = [];
+		for (let i=1; i<=sizes.length; i++) {
+			const thisOrientation =  allOrientations[ Math.floor(Math.random() * allOrientations.length) ];
+			orientations.push(thisOrientation);
+		}
+		
+		alert(sizes + "   " + orientations);
+		*/
+	    
+		/*
+		outputArray = ["A1", "A2", "A3", "A4", "A5",
                        "G6", "H6", "I6",
 		               "C7", "D8", "E9", "F10",
 		    		   "G4", "H3", "I2", "J1",
 					   "C2", "D3",
 					   "I9", "J9"];
+		*/
+		
+        for (let i=1; i<=numTarget; i++) {
+			const cellToAdd = Math.floor(Math.random() * available.length);
+			outputArray.push(available[cellToAdd]);
+			available.splice(cellToAdd, 1);
+		}
 		return outputArray;
 	}
 	
@@ -89,7 +115,6 @@ class BattleShip extends React.Component {
 			       || this.state.cells[theCell].missed) {
 			return false;
 		}
-		
 		let stateCells = {...this.state.cells};
      	let goodShot = this.state.cells[theCell].occupied;
 	    if (goodShot) {		
@@ -153,12 +178,21 @@ class BattleShip extends React.Component {
 	}
 	
 	clear() {
-	    /* alert("RESET"); */
+		this.occupiedCells = this.populate(this.ntargs, this.cellNames, this.ncols, this.nrows);
+		
+		this.initCells = {};
+		for (let i=0; i<this.cellNames.length; i++) {
+		    const occupado = this.occupiedCells.includes(this.cellNames[i]);
+			const object = {address: this.cellNames[i], fill: "clear", occupied: occupado,
+			                missed: false, hit: false};
+			this.initCells = {...this.initCells, [this.cellNames[i]]: object};
+		}
+		
         this.setState((state) => {
 			return {
 			    showTargets: false,
 			    shotsAllowed: this.maxshots,
-			    totalTargets: this.occupiedCells.length,
+			    totalTargets: this.ntargs,
 	            totalFired: 0,
 	            totalHits: 0,
 	            totalMisses: 0,
@@ -174,11 +208,6 @@ class BattleShip extends React.Component {
 	
 	componentDidUpdate() {
 		/*
-		  let obj = this.initCells["C3"];
-          alert("INIT: " + obj.address + "   " + obj.fill + "   " + obj.occupied + "   " + obj.hit);
-		  obj = this.state.cells["C3"];
-          alert("NOW: " + obj.address + "   " + obj.fill + "   " + obj.occupied + "   " + obj.hit);
-		
 		  let cc=0;
 		  for (let property in this.state.cells) {
 			  cc = cc+1;
@@ -240,6 +269,7 @@ class BattleShip extends React.Component {
 			        <button id="new-game-button" className={"bottom-row"} onClick={this.clear}>RESET GAME</button>	
                     </div>
 				</div>
+				
 			</div>
         );
     }

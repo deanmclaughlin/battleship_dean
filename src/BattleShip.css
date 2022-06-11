@@ -3,6 +3,10 @@
      BATTLESHIP GAME STYLINGS
  ================================================
 */
+:root {
+	--cell-width: 9%;
+}
+
 .game-holder {
 	width: 90%;
 	min-width: 400px;
@@ -44,8 +48,8 @@
 	margin-left: 0.3em;
 }
 .game-board td {
-	width: 9%;
-	padding: 0 0 9% 0;
+	width: var(--cell-width);
+	padding: 0 0 var(--cell-width) 0;
 	/* background-color: rgb(117,255,255); */
 	border: 2px solid rgb(0,0,0);
 }
@@ -53,7 +57,7 @@
 	cursor: crosshair;
 }
 .game-board th {
-	width: 9%;
+	width: var(--cell-width);
 	padding: 0 0 0.3em 0;
 	text-align: center;
 	border: none;
