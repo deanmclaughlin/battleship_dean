@@ -1,75 +1,125 @@
+* {
+   box-sizing: border-box;
+}
+
+body {
+    background-color: rgb(215,215,215);
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.App {
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-width: 340px;
+}
+
+.App-header {
+    background-color: #282c34;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: calc(10px + 1.5vmin);
+    color: white;
+}
+.App-header > h1 {
+	margin: 0.5em 0 0 0;
+	padding: 0;
+}
+.App-header > p {
+	margin-top: 0.5em;
+    color: rgb(244,24,11);
+}
+
 /*
  ================================================
      BATTLESHIP GAME STYLINGS
  ================================================
 */
-:root {
-	--cell-width: 9%;
-}
 
-.game-holder {
-	width: 90%;
-	min-width: 400px;
-	margin: 4em auto 1em auto;
-	/* border-bottom: 3px solid rgb(200,0,0); */
-}
-.game-holder>h1 {
-	margin-bottom: 0;
-}
-.game-holder>p {
-	margin-top: 0;
+:root {
+	--full-width: calc(max(70vw, 350px));
+	--game-width: calc(max(60vw, 350px));
 }
 .game-flex {
-  display: flex;
-  width: 100%;
-  /* justify-content: space-between; */
-  margin: 0 auto;
-}
-.game-board {
-	width: 100%;
-	margin-bottom: 2em;
-    table-layout: fixed;
-    border-collapse: collapse;
-	/* border: 1px solid blue; */
-}
-#the-board {
-	width: 75%;
+	width: var(--full-width);
+    display: flex;
+    flex-direction: column;
+	margin: 2vh auto;
 	padding: 0;
-	/* border: 1px solid black; */
 }
 #score-status {
-	width: 25%;
+	display: flex;
+	align-items: center;
+	border: 10px solid black;
 	text-align: left;
-	font-size: 1.1em;
+	font-size: max(12.5px, calc(8px + 1.5vmin));
 	font-weight: bold;
-	padding: 2em;
+	padding: 0.5em;
 }
-#score-status>p {
-	margin-left: 0.3em;
+#score-status p {
+	margin: 0;
+}
+#status-left {
+	width: 50%;
+	text-align: right;
+	padding: 0 1.3vh 0 0;
+}
+#status-right {
+	width: 50%;
+	text-align: left;
+	padding: 0 0 0 1.7vh;
+}
+#board-align {
+	display: flex;
+	justify-content: center;
+}
+.game-board {
+    border-collapse: collapse;
+	margin: 2em 0 1em 0;
 }
 .game-board td {
-	width: var(--cell-width);
-	padding: 0 0 var(--cell-width) 0;
-	/* background-color: rgb(117,255,255); */
+	/* width: calc(var(--game-width)/(ncols+2)); padding: 0 0 calc(var(--game-width)/(ncols+2)) 0; */
+	width: 0;
+	padding: 0 0 --var(cell-width) 0;
 	border: 2px solid rgb(0,0,0);
 }
 .game-board td:hover {
 	cursor: crosshair;
 }
 .game-board th {
-	width: var(--cell-width);
-	padding: 0 0 0.3em 0;
+	width: 0;
+	padding: 0;
 	text-align: center;
-	border: none;
+	border: 2px solid rgb(105,105,105);
+	border-bottom: none;
 	background-color: transparent;
-	font-weight: 550;
+	color: rgb(0,0,255);
+	font-size: 12px;
+	font-weight: 650;
 }
 .game-board td:nth-child(1), th:nth-child(1) {
-	padding: 0 0.5em 0 0;
+	width: 0;
+	padding: 0;
 	text-align: right;
-	border: none;
 	background-color: transparent;
-	font-weight: 550;
+	color: rgb(0,0,255);
+	font-size: 12px;
+	font-weight: 650;
+}
+.game-board td:nth-child(1) {
+	border: 2px solid rgb(105,105,105);
+	border-right: none;
+}
+.game-board th:nth-child(1) {
+	border: none;
 }
 .clear {
 	background-color: rgb(117,255,255);
@@ -99,27 +149,27 @@
 .hide {
 	background-color: rgb(117,255,255);
 }
-#new-game-button {
+#button-holder {
+	text-align: center;
+	padding: 1vh 0;
+}
+button {
 	width: 8em;
 	height: 3em;
 	border-radius: 10px;
-	background-color: rgb(224,24,11);
 	color: rgb(255,255,255);
-	font-size: 0.8em;
+	font-size: 0.9em;
 	font-weight: bolder;
-	margin: 0;
+	margin: 0 1vh;	
+}
+#new-game-button {
+	background-color: rgb(224,24,11);
 }
 #new-game-button:hover {
 	cursor: pointer;
 }
 #show-hide-button {
-	width: 8em;
-	height: 3em;
 	border-radius: 10px;
-	color: rgb(255,255,255);
-	font-size: 0.8em;
-	font-weight: bolder;
-	margin: 0;
 }
 #show-hide-button:hover {
 	cursor: pointer;

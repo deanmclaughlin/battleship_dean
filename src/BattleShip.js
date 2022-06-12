@@ -1,23 +1,22 @@
-import './App.css';
+
 import './BattleShip.css';
 import React from 'react';
 
 class BattleShip extends React.Component {
     constructor(props) {
-        super(props);
-		/*   [ for future use... ]
-		this.nrows = Math.max(8, Math.min(Math.round(Number(this.props.rows)), 26));
-		this.ncols = Math.max(8, Math.min(Math.round(Number(this.props.columns)), 26));
-		*/
+		/*
 		this.nrows = 10;
 		this.ncols = 10;
-		this.ntargs = 5 * Math.round((this.nrows * this.ncols)/25);
-		this.maxshots = 2 * this.ntargs;
+		*/
+        super(props);
+		this.nrows = Math.max(5, Math.min(Math.round(Number(this.props.rows)), 26));
+		this.ncols = Math.max(5, Math.min(Math.round(Number(this.props.columns)), 26));
+		this.ntargs = Math.max(1, Math.min(Math.round(Number(this.props.ships)), this.nrows*this.ncols));
+		this.maxshots = Math.max(this.ntargs, Math.min(Math.round(Number(this.props.shots)), this.nrows*this.ncols));
 		
 		this.rowLabels = this.numArray(this.nrows);
         this.columnLabels = this.charArray(this.ncols);
 		this.cellNames = this.coordsArray(this.rowLabels, this.columnLabels);
-		
 		this.occupiedCells = this.populate(this.ntargs, this.cellNames, this.columnLabels, this.rowLabels);
 		
 		this.initCells = {};
@@ -86,17 +85,7 @@ class BattleShip extends React.Component {
 			const thisOrientation =  allOrientations[ Math.floor(Math.random() * allOrientations.length) ];
 			orientations.push(thisOrientation);
 		}
-		
 		alert(sizes + "   " + orientations);
-		*/
-	    
-		/*
-		outputArray = ["A1", "A2", "A3", "A4", "A5",
-                       "G6", "H6", "I6",
-		               "C7", "D8", "E9", "F10",
-		    		   "G4", "H3", "I2", "J1",
-					   "C2", "D3",
-					   "I9", "J9"];
 		*/
 		
         for (let i=1; i<=numTarget; i++) {
@@ -217,26 +206,47 @@ class BattleShip extends React.Component {
 		
 		if (this.state.totalHits === this.state.totalTargets) {
 			let message = "YOU WIN! " + (this.state.totalTargets) 
-                			+ " targets hit with " + this.state.totalFired + " shots.";
+                			+ " ships hit with " + this.state.totalFired + " shots.";
 			alert(message + "\n\nClick OK to start a new game.");
 			this.clear();
 		} else if (this.state.totalFired === this.state.shotsAllowed) {
 			let message = "YOU LOSE! " + (this.state.totalTargets - this.state.totalHits)
-			                + " targets have survived your attack.";
+			                + " ships have survived your attack.";
 			alert(message + "\n\nClick OK to start a new game.");
 			this.clear();
 		}
-				
+			
 	}
+
 	
     render() {
+		const cellWidth = "calc(var(--game-width)/" + (this.ncols+2).toFixed(0);
+		const cellStyle = {width: cellWidth, paddingBottom: cellWidth}
+		
         return (
-		    <div className={"game-holder"}>
-
-                <div className={"game-flex"}>
-				    <div id="the-board">
-		            <table className={"game-board"}>
-			
+		    <div className={"game-flex"}>
+					
+			        <div id="score-status">
+     					<div id="status-left">
+	    		        <p>
+		    			HITS:&nbsp; {this.state.totalHits}
+			    		<br/>
+			            MISSES:&nbsp; {this.state.totalMisses}
+					    </p>
+    					</div>
+					
+	    				<div id="status-right">
+		    			<p>
+			    		SHOTS LEFT:&nbsp; {this.state.shotsAllowed - this.state.totalFired}
+				    	<br/>
+					    SHIPS LEFT:&nbsp; {this.state.totalTargets - this.state.totalHits}
+    					</p>
+	    				</div>
+					</div>
+                    
+					<div id="board-align">
+		                <table className={"game-board"}>
+		
 			            <thead>
 			            <tr>
 				            <th></th>
@@ -247,28 +257,22 @@ class BattleShip extends React.Component {
                         <tbody>
 			            {this.rowLabels.map(row => 
 			            <tr key={"row"+row} id={"row"+row}>
-				            <td>{row}</td>
+				            <td>&nbsp;{row}&nbsp;</td>
 				            {this.columnLabels.map(col =>
-							    <td key={col+row} id={col+row} className={this.state.cells[col+row].fill} onClick={this.fire}> </td>)}
+							    <td key={col+row} id={col+row} className={this.state.cells[col+row].fill}
+								    style={cellStyle}
+									onClick={this.fire}> </td>)}
 				        </tr>
 			            )}
                         </tbody>
 						
-                    </table>
-			        </div>
-				   
-			        <div id="score-status">
-			        <p> HITS:&nbsp; {this.state.totalHits} </p>
-			        <p> MISSES:&nbsp; {this.state.totalMisses} </p>
-					<p> SHOTS<br/>REMAINING:&nbsp; {this.state.shotsAllowed - this.state.totalFired}</p>
-					<p> TARGETS<br/>REMAINING:&nbsp; {this.state.totalTargets - this.state.totalHits} </p>
+                        </table>
+					</div>
 					
-					<br/>
-                    <button id="show-hide-button" className={"click-to-show"} onClick={this.reveal}></button>
-					<br/><br/>
-			        <button id="new-game-button" className={"bottom-row"} onClick={this.clear}>RESET GAME</button>	
+					<div id="button-holder">
+                        <button id="show-hide-button" className={"click-to-show"} onClick={this.reveal}></button>
+			            <button id="new-game-button" className={"bottom-row"} onClick={this.clear}>RESET GAME</button>	
                     </div>
-				</div>
 				
 			</div>
         );

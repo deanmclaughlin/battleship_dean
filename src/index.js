@@ -1,13 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
+import './BattleShip.css';
+import BattleShip from './BattleShip';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+	
+    <div className="App">
+	
+      <header className="App-header">
+        <h1> Battleship Armada </h1>
+		<p> Click a square to fire on a ship</p>
+      </header>
+	  
+	  <main>
+	    <BattleShip rows="10" columns="10" ships="20" shots="35" />
+	  </main>
+	  
+    </div>
+
   </React.StrictMode>
 );
 
