@@ -1,4 +1,3 @@
-
 import './BattleShip.css';
 import React from 'react';
 
@@ -29,8 +28,6 @@ class BattleShip extends React.Component {
 		
         this.state = {
 			showTargets: false,
-			shotsAllowed: this.maxshots,
-			totalTargets: this.ntargs,
 			totalFired: 0,
 			totalHits: 0,
 			totalMisses: 0,
@@ -180,8 +177,6 @@ class BattleShip extends React.Component {
         this.setState((state) => {
 			return {
 			    showTargets: false,
-			    shotsAllowed: this.maxshots,
-			    totalTargets: this.ntargs,
 	            totalFired: 0,
 	            totalHits: 0,
 	            totalMisses: 0,
@@ -204,13 +199,13 @@ class BattleShip extends React.Component {
 		  alert(cc);
 		*/
 		
-		if (this.state.totalHits === this.state.totalTargets) {
-			let message = "YOU WIN! " + (this.state.totalTargets) 
+		if (this.state.totalHits === this.ntargs) {
+			let message = "YOU WIN! " + (this.ntargs) 
                 			+ " ships hit with " + this.state.totalFired + " shots.";
 			alert(message + "\n\nClick OK to start a new game.");
 			this.clear();
-		} else if (this.state.totalFired === this.state.shotsAllowed) {
-			let message = "YOU LOSE! " + (this.state.totalTargets - this.state.totalHits)
+		} else if (this.state.totalFired === this.maxshots) {
+			let message = "YOU LOSE! " + (this.ntargs - this.state.totalHits)
 			                + " ships have survived your attack.";
 			alert(message + "\n\nClick OK to start a new game.");
 			this.clear();
@@ -237,9 +232,9 @@ class BattleShip extends React.Component {
 					
 	    				<div id="status-right">
 		    			<p>
-			    		SHOTS LEFT:&nbsp; {this.state.shotsAllowed - this.state.totalFired}
+			    		SHOTS LEFT:&nbsp; {this.maxshots - this.state.totalFired}
 				    	<br/>
-					    SHIPS LEFT:&nbsp; {this.state.totalTargets - this.state.totalHits}
+					    SHIPS LEFT:&nbsp; {this.ntargs - this.state.totalHits}
     					</p>
 	    				</div>
 					</div>
